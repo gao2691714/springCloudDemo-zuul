@@ -1,0 +1,44 @@
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+#    将ip告知注册中心
+    prefer-ip-address: true
+spring:
+  application:
+    name: gatewayZuulDemo
+#  cloud:
+#    config:
+#      discovery:
+#        enabled: true
+#        service-id: config
+#server:
+#  port: 9000
+zuul:
+  host:
+    connect-timeout-millis: 3000
+    socket-timeout-millis: 3000
+  routes:
+#    自定义路由
+    lunar:
+      path: /lunar/**
+      serviceId: eurekaClient1
+    feign:
+      path: /feign/**
+      serviceId: eurekaClient_fegin
+#  禁止对外路由
+  ignored-patterns:
+    - /demo/getLunarDateByParam
+ribbon:
+  ReadTimeout: 3000
+  ConnectTimeout: 3000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeout-in-milliseconds: 3000
