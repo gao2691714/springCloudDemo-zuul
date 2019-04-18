@@ -1,34 +1,36 @@
 
 eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
   instance:
-#    ½«ip¸æÖª×¢²áÖĞĞÄ
+#  å°†ipå‘ŠçŸ¥æ³¨å†Œä¸­å¿ƒ
     prefer-ip-address: true
 spring:
   application:
     name: gatewayZuulDemo
-#  cloud:
-#    config:
-#      discovery:
-#        enabled: true
-#        service-id: config
+  cloud:
+    config:
+#      ä½¿ç”¨ç»Ÿä¸€é…ç½®ä¸­å¿ƒé…ç½®eurekaçš„service-url
+      discovery:
+        enabled: true
+        service-id: CONFIG_SERVICE
+      profile: dev
 #server:
-#  port: 9000
+#  port: 9001
 zuul:
   host:
     connect-timeout-millis: 3000
     socket-timeout-millis: 3000
   routes:
-#    ×Ô¶¨ÒåÂ·ÓÉ
+#    è‡ªå®šä¹‰è·¯ç”±
     lunar:
       path: /lunar/**
       serviceId: eurekaClient1
     feign:
       path: /feign/**
       serviceId: eurekaClient_fegin
-#  ½ûÖ¹¶ÔÍâÂ·ÓÉ
+#  ç¦æ­¢å¯¹å¤–è·¯ç”±
   ignored-patterns:
     - /demo/getLunarDateByParam
 ribbon:
